@@ -2,18 +2,15 @@ package algorithms.trees
 
 import scala.collection.mutable
 
-case class BinaryTreeNode[T](value: T, left: BinaryTreeNode[T] = null, right:BinaryTreeNode[T] = null) {
+case class BinaryTreeNode[T](value: T,
+                             left: Option[BinaryTreeNode[T]] = None,
+                             right: Option[BinaryTreeNode[T]] = None) {
 
   def traversePreOrderRecursive(visitor: (T) => Unit): Unit = {
     visitor(this.value)
 
-    if (this.left != null) {
-      this.left.traversePreOrderRecursive(visitor)
-    }
-
-    if (this.right != null) {
-      this.right.traversePreOrderRecursive(visitor)
-    }
+    this.left.foreach(_.traversePreOrderRecursive(visitor))
+    this.right.foreach(_.traversePreOrderRecursive(visitor))
   }
 
   def traversePreOrderIterative(visitor: (T) => Unit): Unit = {
@@ -26,53 +23,41 @@ case class BinaryTreeNode[T](value: T, left: BinaryTreeNode[T] = null, right:Bin
 
       visitor(node.value)
 
-      if (node.right != null) {
-        stack.push(node.right)
-      }
-      if (node.left != null) {
-        stack.push(node.left)
-      }
+      node.right.foreach(stack.push)
+      node.left.foreach(stack.push)
     }
   }
 
 
   def traverseInOrderRecursive(visitor: (T) => Unit): Unit = {
-    if (this.left != null) {
-      this.left.traverseInOrderRecursive(visitor)
-    }
+    this.left.foreach(_.traverseInOrderRecursive(visitor))
 
     visitor(this.value)
 
-    if (this.right != null) {
-      this.right.traverseInOrderRecursive(visitor)
-    }
+    this.right.foreach(_.traverseInOrderRecursive(visitor))
   }
 
   def traverseInOrderIterative(visitor: (T) => Unit): Unit = {
     val stack = mutable.Stack[BinaryTreeNode[T]]()
-    var current = this
+    var current: Option[BinaryTreeNode[T]] = Some(this)
 
-    while(stack.nonEmpty || current != null) {
+    while(stack.nonEmpty || current.nonEmpty) {
 
-      if (current != null) {
-        stack.push(current)
-        current = current.left
-      } else {
-        val node = stack.pop()
-        visitor(node.value)
-        current = node.right
+      current match {
+        case Some(node) =>
+          stack.push(node)
+          current = node.left
+        case None =>
+          val node = stack.pop()
+          visitor(node.value)
+          current = node.right
       }
     }
   }
 
   def traverseInPostOrderRecursive(visitor: (T) => Unit): Unit = {
-    if (this.left != null) {
-      this.left.traverseInPostOrderRecursive(visitor)
-    }
-
-    if (this.right != null) {
-      this.right.traverseInPostOrderRecursive(visitor)
-    }
+    this.left.foreach(_.traverseInPostOrderRecursive(visitor))
+    this.right.foreach(_.traverseInPostOrderRecursive(visitor))
 
     visitor(this.value)
   }
@@ -85,20 +70,16 @@ case class BinaryTreeNode[T](value: T, left: BinaryTreeNode[T] = null, right:Bin
     while (stack.nonEmpty) {
       val next = stack.head
 
-      val finishedSubtrees = next.right == head || next.left == head
-      val isLeaf = next.left == null && next.right == null
+      val finishedSubtrees = next.right.contains(head) || next.left.contains(head)
+      val isLeaf = next.left.isEmpty && next.right.isEmpty
 
       if (finishedSubtrees || isLeaf) {
         stack.pop()
         visitor(next.value)
         head = next
       } else {
-        if (next.right != null) {
-          stack.push(next.right)
-        }
-        if (next.left != null) {
-          stack.push(next.left)
-        }
+        next.right.foreach(node => stack.push(node))
+        next.left.foreach(node => stack.push(node))
       }
     }
   }
@@ -113,13 +94,8 @@ case class BinaryTreeNode[T](value: T, left: BinaryTreeNode[T] = null, right:Bin
 
       visitor(node.value)
 
-      if (node.left != null) {
-        queue.enqueue(node.left)
-      }
-
-      if (node.right != null) {
-        queue.enqueue(node.right)
-      }
+      node.left.foreach(node => queue.enqueue(node))
+      node.right.foreach(node => queue.enqueue(node))
     }
   }
 }

@@ -97,18 +97,18 @@ class BinaryTreesSpec extends FunSpec with Matchers {
 
   def anExampleTree(): BinaryTreeNode[String] =
     BinaryTreeNode("F",
-      left = BinaryTreeNode("B",
-        left = BinaryTreeNode("A"),
-        right = BinaryTreeNode("D",
-          left = BinaryTreeNode("C"),
-          right = BinaryTreeNode("E")
-        )
-      ),
-      right = BinaryTreeNode("G",
-        right = BinaryTreeNode("I",
-          left = BinaryTreeNode("H")
-        )
-      )
+      left = Some(BinaryTreeNode("B",
+        left = Some(BinaryTreeNode("A")),
+        right = Some(BinaryTreeNode("D",
+          left = Some(BinaryTreeNode("C")),
+          right = Some(BinaryTreeNode("E"))
+        ))
+      )),
+      right = Some(BinaryTreeNode("G",
+        right = Some(BinaryTreeNode("I",
+          left = Some(BinaryTreeNode("H"))
+        ))
+      ))
     )
 }
 
