@@ -18,7 +18,7 @@ case class BinaryTreeNode[T](value: T,
 
     stack.push(this)
 
-    while(stack.nonEmpty) {
+    while (stack.nonEmpty) {
       val node = stack.pop()
 
       visitor(node.value)
@@ -27,7 +27,6 @@ case class BinaryTreeNode[T](value: T,
       node.left.foreach(stack.push)
     }
   }
-
 
   def traverseInOrderRecursive(visitor: (T) => Unit): Unit = {
     this.left.foreach(_.traverseInOrderRecursive(visitor))
@@ -41,7 +40,7 @@ case class BinaryTreeNode[T](value: T,
     val stack = mutable.Stack[BinaryTreeNode[T]]()
     var current: Option[BinaryTreeNode[T]] = Some(this)
 
-    while(stack.nonEmpty || current.nonEmpty) {
+    while (stack.nonEmpty || current.nonEmpty) {
 
       current match {
         case Some(node) =>
@@ -70,7 +69,8 @@ case class BinaryTreeNode[T](value: T,
     while (stack.nonEmpty) {
       val next = stack.head
 
-      val finishedSubtrees = next.right.contains(head) || next.left.contains(head)
+      val finishedSubtrees = next.right.contains(head) || next.left.contains(
+        head)
       val isLeaf = next.left.isEmpty && next.right.isEmpty
 
       if (finishedSubtrees || isLeaf) {
@@ -89,7 +89,7 @@ case class BinaryTreeNode[T](value: T,
 
     queue.enqueue(this)
 
-    while(queue.nonEmpty) {
+    while (queue.nonEmpty) {
       val node = queue.dequeue()
 
       visitor(node.value)

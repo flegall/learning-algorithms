@@ -45,7 +45,6 @@ class BinaryTreesSpec extends FunSpec with Matchers {
         }
       }
 
-
       describe("in order (iterative)") {
 
         it("should visit nodes in order") {
@@ -96,21 +95,18 @@ class BinaryTreesSpec extends FunSpec with Matchers {
   }
 
   def anExampleTree(): BinaryTreeNode[String] =
-    BinaryTreeNode("F",
-      left = Some(BinaryTreeNode("B",
-        left = Some(BinaryTreeNode("A")),
-        right = Some(BinaryTreeNode("D",
-          left = Some(BinaryTreeNode("C")),
-          right = Some(BinaryTreeNode("E"))
-        ))
-      )),
-      right = Some(BinaryTreeNode("G",
-        right = Some(BinaryTreeNode("I",
-          left = Some(BinaryTreeNode("H"))
-        ))
-      ))
+    BinaryTreeNode(
+      "F",
+      left = Some(
+        BinaryTreeNode("B",
+                       left = Some(BinaryTreeNode("A")),
+                       right = Some(
+                         BinaryTreeNode("D",
+                                        left = Some(BinaryTreeNode("C")),
+                                        right = Some(BinaryTreeNode("E")))))),
+      right = Some(
+        BinaryTreeNode(
+          "G",
+          right = Some(BinaryTreeNode("I", left = Some(BinaryTreeNode("H"))))))
     )
 }
-
-
-
