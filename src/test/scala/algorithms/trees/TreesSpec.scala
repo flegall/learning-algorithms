@@ -7,7 +7,7 @@ import scala.collection.mutable
 class TreesSpec extends FunSpec with Matchers {
   describe("Trees") {
 
-    describe("Depth-first search") {
+    describe("depth-first search") {
 
       describe("in pre-order") {
 
