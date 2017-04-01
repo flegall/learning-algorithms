@@ -4,7 +4,7 @@ import org.scalatest.{FunSpec, Matchers}
 
 import scala.collection.mutable
 
-class TreesSpec extends FunSpec with Matchers {
+class BinaryTreesSpec extends FunSpec with Matchers {
   describe("Binary trees") {
 
     describe("depth-first search") {
@@ -82,20 +82,31 @@ class TreesSpec extends FunSpec with Matchers {
         }
       }
     }
+
+    describe("breadth-first search") {
+      it("should visit nodes levels by level") {
+        val buffer = mutable.ListBuffer.empty[String]
+        val tree = anExampleTree()
+
+        tree.traverseBreadthFirst((value) => buffer += value)
+
+        buffer should contain inOrderOnly ("F", "B", "G", "A", "D", "I", "C", "E", "H")
+      }
+    }
   }
 
-  def anExampleTree(): Node[String] =
-    Node("F",
-      left = Node("B",
-        left = Node("A"),
-        right = Node("D",
-          left = Node("C"),
-          right = Node("E")
+  def anExampleTree(): BinaryTreeNode[String] =
+    BinaryTreeNode("F",
+      left = BinaryTreeNode("B",
+        left = BinaryTreeNode("A"),
+        right = BinaryTreeNode("D",
+          left = BinaryTreeNode("C"),
+          right = BinaryTreeNode("E")
         )
       ),
-      right = Node("G",
-        right = Node("I",
-          left = Node("H")
+      right = BinaryTreeNode("G",
+        right = BinaryTreeNode("I",
+          left = BinaryTreeNode("H")
         )
       )
     )
