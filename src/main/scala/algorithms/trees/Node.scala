@@ -16,7 +16,7 @@ case class Node[T](value: T, left: Node[T] = null, right:Node[T] = null) {
     }
   }
 
-  def traversePreOrder(visitor: (T) => Unit): Unit = {
+  def traversePreOrderIterative(visitor: (T) => Unit): Unit = {
     val stack = mutable.Stack[Node[T]]()
 
     stack.push(this)
@@ -48,7 +48,7 @@ case class Node[T](value: T, left: Node[T] = null, right:Node[T] = null) {
     }
   }
 
-  def traverseInOrder(visitor: (T) => Unit): Unit = {
+  def traverseInOrderIterative(visitor: (T) => Unit): Unit = {
     val stack = mutable.Stack[Node[T]]()
     var current = this
 
@@ -61,6 +61,44 @@ case class Node[T](value: T, left: Node[T] = null, right:Node[T] = null) {
         val node = stack.pop()
         visitor(node.value)
         current = node.right
+      }
+    }
+  }
+
+  def traverseInPostOrderRecursive(visitor: (T) => Unit): Unit = {
+    if (this.left != null) {
+      this.left.traverseInPostOrderRecursive(visitor)
+    }
+
+    if (this.right != null) {
+      this.right.traverseInPostOrderRecursive(visitor)
+    }
+
+    visitor(this.value)
+  }
+
+  def traverseInPostOrderIterative(visitor: (T) => Unit): Unit = {
+    val stack = mutable.Stack[Node[T]]()
+    var head = this
+    stack.push(head)
+
+    while (stack.nonEmpty) {
+      val next = stack.head
+
+      val finishedSubtrees = next.right == head || next.left == head
+      val isLeaf = next.left == null && next.right == null
+
+      if (finishedSubtrees || isLeaf) {
+        stack.pop()
+        visitor(next.value)
+        head = next
+      } else {
+        if (next.right != null) {
+          stack.push(next.right)
+        }
+        if (next.left != null) {
+          stack.push(next.left)
+        }
       }
     }
   }

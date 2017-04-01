@@ -5,7 +5,7 @@ import org.scalatest.{FunSpec, Matchers}
 import scala.collection.mutable
 
 class TreesSpec extends FunSpec with Matchers {
-  describe("Trees") {
+  describe("Binary trees") {
 
     describe("depth-first search") {
 
@@ -15,7 +15,7 @@ class TreesSpec extends FunSpec with Matchers {
           val buffer = mutable.ListBuffer.empty[String]
           val tree = anExampleTree()
 
-          tree.traversePreOrder((value) => buffer += value)
+          tree.traversePreOrderIterative((value) => buffer += value)
 
           buffer should contain inOrderOnly ("F", "B", "A", "D", "C", "E", "G", "I", "H")
         }
@@ -52,9 +52,33 @@ class TreesSpec extends FunSpec with Matchers {
           val buffer = mutable.ListBuffer.empty[String]
           val tree = anExampleTree()
 
-          tree.traverseInOrder((value) => buffer += value)
+          tree.traverseInOrderIterative((value) => buffer += value)
 
           buffer shouldBe sorted
+        }
+      }
+
+      describe("in post-order (recursive)") {
+
+        it("should visit nodes in post-order") {
+          val buffer = mutable.ListBuffer.empty[String]
+          val tree = anExampleTree()
+
+          tree.traverseInPostOrderRecursive((value) => buffer += value)
+
+          buffer should contain inOrderOnly ("A", "C", "E", "D", "B", "H", "I", "G", "F")
+        }
+      }
+
+      describe("in post-order (iterative)") {
+
+        it("should visit nodes in post-order") {
+          val buffer = mutable.ListBuffer.empty[String]
+          val tree = anExampleTree()
+
+          tree.traverseInPostOrderIterative((value) => buffer += value)
+
+          buffer should contain inOrderOnly ("A", "C", "E", "D", "B", "H", "I", "G", "F")
         }
       }
     }
