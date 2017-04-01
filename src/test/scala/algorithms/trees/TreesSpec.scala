@@ -16,7 +16,6 @@ class TreesSpec extends FunSpec with Matchers {
           val tree = anExampleTree()
           tree.traversePreOrder((value) => buffer += value)
           buffer should contain inOrderOnly ("F", "B", "A", "D", "C", "E", "G", "I", "H")
-
         }
       }
     }
