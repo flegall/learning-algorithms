@@ -8,7 +8,7 @@ class SortingSpec extends FunSpec with Matchers {
       it("should sort an array") {
         val array = anArrayToSort()
 
-        SelectionSort.sort(array)
+        SelectionSort(array)
 
         array shouldBe sorted
       }

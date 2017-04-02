@@ -3,7 +3,7 @@ package algorithms.sorting
 import scala.math.Ordering
 
 object SelectionSort {
-  def sort[T: Ordering](t: Array[T]): Unit = {
+  def apply[T: Ordering](t: Array[T]): Unit = {
     val ord: Ordering[T] = implicitly[Ordering[T]]
     val N = t.length
 
