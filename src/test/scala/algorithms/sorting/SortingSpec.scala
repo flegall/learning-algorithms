@@ -4,16 +4,52 @@ import org.scalatest.{FunSpec, Matchers}
 
 class SortingSpec extends FunSpec with Matchers {
   describe("Sorting algorithms") {
+
     describe("Selection sort") {
-      it("should sort an array") {
+
+      it("should sort a simple array") {
         val array = anArrayToSort()
 
         SelectionSort(array)
 
         array shouldBe sorted
       }
+
+      it("should sort a huge array") {
+        val array = aHugeArray()
+
+        SelectionSort(array)
+
+        array shouldBe sorted
+      }
+    }
+
+    describe("Insertion sort") {
+
+      it("should sort an array") {
+        val array = anArrayToSort()
+
+        InsertionSort(array)
+
+        array shouldBe sorted
+      }
+
+      it("should sort a huge array") {
+        val array = aHugeArray()
+
+        InsertionSort(array)
+
+        array shouldBe sorted
+      }
     }
   }
-  def anArrayToSort() =
+
+  def anArrayToSort(): Array[String] =
     Array("z", "a", "n", "a", "r", "r", "a", "y", "t", "o", "s", "o", "r", "t")
+
+  def aHugeArray(): Array[String] =
+    (0 until 2000)
+      .map(_ => java.util.UUID.randomUUID)
+      .map(_.toString)
+      .toArray[String]
 }
