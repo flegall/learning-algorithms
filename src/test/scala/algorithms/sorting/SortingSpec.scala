@@ -1,12 +1,13 @@
 package algorithms.sorting
 
+import java.util.UUID.randomUUID
+
 import org.scalatest.{FunSpec, Matchers}
 
 class SortingSpec extends FunSpec with Matchers {
   describe("Sorting algorithms") {
 
     describe("Selection sort") {
-
       it("should sort a simple array") {
         val array = anArrayToSort()
 
@@ -25,8 +26,7 @@ class SortingSpec extends FunSpec with Matchers {
     }
 
     describe("Insertion sort") {
-
-      it("should sort an array") {
+      it("should sort a simple array") {
         val array = anArrayToSort()
 
         InsertionSort(array)
@@ -42,6 +42,24 @@ class SortingSpec extends FunSpec with Matchers {
         array shouldBe sorted
       }
     }
+
+    describe("Shell sort") {
+      it("should sort a simple array") {
+        val array = anArrayToSort()
+
+        ShellSort(array)
+
+        array shouldBe sorted
+      }
+
+      it("should sort a huge array") {
+        val array = aHugeArray()
+
+        ShellSort(array)
+
+        array shouldBe sorted
+      }
+    }
   }
 
   def anArrayToSort(): Array[String] =
@@ -49,7 +67,7 @@ class SortingSpec extends FunSpec with Matchers {
 
   def aHugeArray(): Array[String] =
     (0 until 2000)
-      .map(_ => java.util.UUID.randomUUID)
+      .map(_ => randomUUID)
       .map(_.toString)
       .toArray[String]
 }
