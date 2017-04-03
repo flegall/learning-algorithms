@@ -60,6 +60,26 @@ class SortingSpec extends FunSpec with Matchers {
         array shouldBe sorted
       }
     }
+
+    describe("Quick sort") {
+      describe("naive recursive implementation") {
+        it("should sort a simple array") {
+          var array = anArrayToSort()
+
+          array = QuickSort.naiveRecursive(array)
+
+          array shouldBe sorted
+        }
+
+        it("should sort a huge array") {
+          var array = aHugeArray()
+
+          array = QuickSort.naiveRecursive(array)
+
+          array shouldBe sorted
+        }
+      }
+    }
   }
 
   def anArrayToSort(): Array[String] =
