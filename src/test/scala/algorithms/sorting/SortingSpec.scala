@@ -79,6 +79,24 @@ class SortingSpec extends FunSpec with Matchers {
           array shouldBe sorted
         }
       }
+
+      describe("recursive implementation") {
+        it("should sort a simple array") {
+          val array = anArrayToSort()
+
+          QuickSort.recursive(array)()
+
+          array shouldBe sorted
+        }
+
+        it("should sort a huge array") {
+          val array = aHugeArray()
+
+          QuickSort.recursive(array)()
+
+          array shouldBe sorted
+        }
+      }
     }
   }
 
