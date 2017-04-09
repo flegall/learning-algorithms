@@ -64,7 +64,7 @@ object QuickSort {
       while (true) {
         do { i += 1 } while (ordering.lt(t(i), v))
         do { j -= 1 } while (j >= 0 && ordering.gt(t(j), v))
-        if (i >= j) { break() }
+        if (i >= j) { break }
         swap(t, i, j)
       }
     }
