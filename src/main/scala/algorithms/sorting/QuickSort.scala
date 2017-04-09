@@ -53,6 +53,8 @@ object QuickSort {
                                      l: Int,
                                      r: Int,
                                      ordering: Ordering[T]): Int = {
+    choose_median_of_three_and_move_it_to_the_end(t, l, r)
+
     val v = t(r)
     var i = l - 1
     var j = r
@@ -68,6 +70,27 @@ object QuickSort {
     swap(t, i, r)
 
     i
+  }
+
+  private def choose_median_of_three_and_move_it_to_the_end[T: Ordering](
+      t: Array[T],
+      l: Int,
+      r: Int): Unit = {
+    val ordering = implicitly[Ordering[T]]
+
+    val center = (l + r) / 2
+
+    if (ordering.gt(t(l), t(center))) {
+      swap(t, l, center)
+    }
+    if (ordering.gt(t(l), t(r))) {
+      swap(t, l, r)
+    }
+    if (ordering.gt(t(center), t(r))) {
+      swap(t, center, r)
+    }
+
+    swap(t, center, r)
   }
 
   def naiveRecursive[T: Ordering](t: Array[T])(
