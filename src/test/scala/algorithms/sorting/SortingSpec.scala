@@ -4,6 +4,8 @@ import java.util.UUID.randomUUID
 
 import org.scalatest.{FunSpec, Matchers}
 
+import scala.util.Sorting
+
 class SortingSpec extends FunSpec with Matchers {
   describe("Sorting algorithms") {
 
@@ -113,6 +115,21 @@ class SortingSpec extends FunSpec with Matchers {
           QuickSort(array)
 
           array shouldBe sorted
+        }
+      }
+
+      describe("Kth element selection") {
+        it("should find the 1337th element of a huge array") {
+          val arraySource = aHugeArray()
+          val sortedArray = arraySource.clone()
+          Sorting.quickSort(sortedArray)
+          val k = 1337
+          val kthElement = sortedArray(k)
+          val arrayToSelect = arraySource.clone()
+
+          QuickSort.kSelection(arrayToSelect)(k = k)
+
+          arrayToSelect(k) shouldBe kthElement
         }
       }
     }

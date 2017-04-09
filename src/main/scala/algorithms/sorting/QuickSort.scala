@@ -1,5 +1,6 @@
 package algorithms.sorting
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.math.Ordering
 import scala.reflect.ClassTag
@@ -106,6 +107,21 @@ object QuickSort {
         val after = tail.filter(value => ordering.gt(value, first))
 
         naiveRecursive(below) ++ Array(first) ++ naiveRecursive(after)
+    }
+  }
+
+  @tailrec
+  def kSelection[T: Ordering](
+      t: Array[T])(l: Int = 0, r: Int = t.length - 1, k: Int): Unit = {
+    val ordering = implicitly[Ordering[T]]
+
+    if (r > l) {
+      val i = partition(t, l, r, ordering)
+      if (i > k - 1) {
+        kSelection(t)(l, i - 1, k)
+      } else {
+        kSelection(t)(i + 1, r, k)
+      }
     }
   }
 }
